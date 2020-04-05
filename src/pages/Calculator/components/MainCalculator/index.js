@@ -1,26 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { FaCalculator as CalcIcon} from 'react-icons/fa' ;
 
+import Ingredient  from '../../components/Ingredient'
 import '../../style.css'
 
 export default function MainCalculator() {
-    const [ flourQt, setFlourQt ] = useState(1000);
-    const [ flourPc, setFlourPc ] = useState(1);
+    const [ recipe, setRecipe ] = useState({
+        flour: 1000,
+        water: 670,
+        salt: 20,
+    });
+
     
-    const [ waterQt, setWaterQt ] = useState(0);
-    const [ waterPc, setWaterPc ] = useState(0.67);
-
-    useEffect(() => {
-        setWaterQt(waterPc*flourQt);
-    }, [])
-
-    useEffect(() => {
-        console.log('====================================');
-        console.log(waterQt);
-        console.log('====================================');
-
-    }, waterQt)
-
+    function handleChange(e) {
+        setRecipe({
+            ...recipe,
+            [e.target.name]:  e.target.value
+        })
+    }
 
     return (
         <section className="main-calculator">
@@ -29,29 +26,10 @@ export default function MainCalculator() {
                 <h4>Dough Calculator</h4>
             </header>
 
-            <section className="ingredient">
-                <input type="text" value={"Flour"} />
-                <input type="number" value={flourQt} onChange={e => setFlourQt(e.target.value)} />
-                <input type="text" value={`${flourPc*100} %`} readOnly/>
-            </section>
+            <Ingredient name={'flour'} value={recipe.flour} onQuantityChange={handleChange}/>
+            <Ingredient name={'water'} value={recipe.water} onQuantityChange={handleChange}/>
+            <Ingredient name={'salt'} value={recipe.salt} onQuantityChange={handleChange}/>
 
-            <section className="ingredient">
-                <input type="text" value={"Water"} />
-                <input type="number" value={waterQt} />
-                <input type="text" value={`${waterPc*100} %`} />
-            </section>
-
-            <section className="ingredient">
-                <input type="text" value={"Starter"} />
-                <input type="number" />
-                <input type="text" />
-            </section>
-
-            <section className="ingredient">
-                <input type="text" value={"Salt"} />
-                <input type="number" />
-                <input type="text" />
-            </section>
         </section>
     )
 }
