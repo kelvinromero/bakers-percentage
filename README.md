@@ -15,7 +15,7 @@ curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 sudo apt-get install -y nodejs
 ```
 
-Install dependices and run
+Install dependices and start the project
 
 ```sh
 npm install
