@@ -5,17 +5,33 @@ import Ingredient  from '../../components/Ingredient'
 import '../../style.css'
 
 export default function MainCalculator() {
-    const [ recipe, setRecipe ] = useState({
-        flour: 1000,
-        water: 670,
-        salt: 20,
-    });
+    // TODO: Add ingredients dinamically.
+    const [ recipe, setRecipe ] = useState([
+        {
+            name: 'flour',
+            quantity: 1000,
+            percentagem: 1
+        },
+        {
+            name: 'water',
+            quantity: 670,
+            percentagem: .67
+        },
+    ]);
+
+    useEffect(() => {
+        console.log('====================================');
+        console.log(recipe);
+        console.log('====================================');
+
+    }, [recipe]);
+
 
     
     function handleChange(e) {
         setRecipe({
             ...recipe,
-            [e.target.name]:  e.target.value
+            [e.target.name]: parseInt(e.target.value)
         })
     }
 
@@ -26,9 +42,8 @@ export default function MainCalculator() {
                 <h4>Dough Calculator</h4>
             </header>
 
-            <Ingredient name={'flour'} value={recipe.flour} onQuantityChange={handleChange}/>
-            <Ingredient name={'water'} value={recipe.water} onQuantityChange={handleChange}/>
-            <Ingredient name={'salt'} value={recipe.salt} onQuantityChange={handleChange}/>
+            <Ingredient name={recipe[0].name} value={recipe[0].quantity} onQuantityChange={handleChange}/>
+            <Ingredient name={recipe[1].name} value={recipe[1].quantity} onQuantityChange={handleChange}/>
 
         </section>
     )
