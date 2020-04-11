@@ -1,13 +1,16 @@
 import React from 'react';
 
 export default function Ingredient(props) {
-    const {value, onQuantityChange, name} = props
+    const { value, onQuantityChange, name } = props
     return (
-        <section className="ingredient">
+        <section className="ingredient" id={name}>
             <input type="text" />
-            <input type="number" name={name}
+
+            <input
+                type="number" name={name}
                 value={value}
                 onChange={onQuantityChange} />
+
             <input type="text" />
         </section>
     );

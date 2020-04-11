@@ -1,38 +1,48 @@
-import React, { useState, useEffect } from 'react';
-import { FaCalculator as CalcIcon} from 'react-icons/fa' ;
+import React, { useState } from 'react';
+import { FaCalculator as CalcIcon } from 'react-icons/fa';
 
-import Ingredient  from '../../components/Ingredient'
+import Ingredient from '../../components/Ingredient'
 import '../../style.css'
 
 export default function MainCalculator() {
-    // TODO: Add ingredients dinamically.
-    const [ recipe, setRecipe ] = useState([
+    const [recipe, setRecipe] = useState([
         {
             name: 'flour',
             quantity: 1000,
-            percentagem: 1
         },
         {
             name: 'water',
             quantity: 670,
-            percentagem: .67
+        },
+        {
+            name: 'salt',
+            quantity: 20,
         },
     ]);
 
-    useEffect(() => {
-        console.log('====================================');
-        console.log(recipe);
-        console.log('====================================');
+    const handleQuantityChange = (e) => {
+        const newRecipe = recipe.map(i => {
+            if (i.name === e.target.name) {
+                i.quantity = e.target.value
+            }
 
-    }, [recipe]);
-
-
-    
-    function handleChange(e) {
-        setRecipe({
-            ...recipe,
-            [e.target.name]: parseInt(e.target.value)
+            return i;
         })
+
+        setRecipe([
+            ...newRecipe
+        ])
+    }
+
+    function addIngredient() {
+        setRecipe([
+            ...recipe,
+            {
+                name: '',
+                quantity: 0,
+                percentagem: 0,
+            }
+        ])
     }
 
     return (
@@ -42,9 +52,18 @@ export default function MainCalculator() {
                 <h4>Dough Calculator</h4>
             </header>
 
-            <Ingredient name={recipe[0].name} value={recipe[0].quantity} onQuantityChange={handleChange}/>
-            <Ingredient name={recipe[1].name} value={recipe[1].quantity} onQuantityChange={handleChange}/>
+            {
+                recipe.map(ingredient => {
+                    return <Ingredient
+                        key={ingredient.name}
+                        name={ingredient.name}
+                        value={ingredient.quantity}
+                        onQuantityChange={handleQuantityChange} />
+                })
+            }
 
+
+            <button onClick={addIngredient}>Add</button>
         </section>
     )
 }
